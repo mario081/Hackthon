@@ -1,18 +1,21 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
+import { ReportProvider } from './context/ReportContext'
 import Home from './pages/Home'
 import Comunicar from './pages/Comunicar'
 import Painel from './pages/Painel'
 
 function TestRouter({ initialEntry }) {
   return (
-    <MemoryRouter initialEntries={[initialEntry]}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/comunicar" element={<Comunicar />} />
-        <Route path="/painel" element={<Painel />} />
-      </Routes>
-    </MemoryRouter>
+    <ReportProvider>
+      <MemoryRouter initialEntries={[initialEntry]}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/comunicar" element={<Comunicar />} />
+          <Route path="/painel" element={<Painel />} />
+        </Routes>
+      </MemoryRouter>
+    </ReportProvider>
   )
 }
 
