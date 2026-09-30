@@ -42,7 +42,7 @@ export default function Comunicar() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div data-testid="page-comunicar" className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-white shadow-sm p-4 flex items-center justify-between">
         <button onClick={handleBack} className="text-gray-600 font-medium">
           ← Voltar
