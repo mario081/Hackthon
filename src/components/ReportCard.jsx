@@ -21,6 +21,8 @@ export default function ReportCard({ report, onClick }) {
     <article
       role="article"
       onClick={onClick}
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick() }}
       className="bg-white rounded-xl border border-gray-200 p-4 flex flex-col gap-2 cursor-pointer hover:shadow-md transition-shadow"
     >
       <div className="flex items-center justify-between">

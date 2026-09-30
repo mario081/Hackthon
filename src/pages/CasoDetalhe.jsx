@@ -27,6 +27,7 @@ export default function CasoDetalhe() {
   const [newReferral, setNewReferral] = useState('')
 
   const report = reports.find((r) => r.id === id)
+  const [localReferrals, setLocalReferrals] = useState(report ? report.referrals : [])
 
   if (!report) {
     return (
@@ -112,10 +113,10 @@ export default function CasoDetalhe() {
 
         {activeTab === 'referrals' && (
           <div className="flex flex-col gap-4">
-            {report.referrals.length === 0 && (
+            {localReferrals.length === 0 && (
               <p className="text-gray-500 text-sm">Nenhum encaminhamento registrado.</p>
             )}
-            {report.referrals.map((ref, i) => (
+            {localReferrals.map((ref, i) => (
               <div key={i} className="bg-white rounded-lg border p-3 flex flex-col gap-1">
                 <span className="font-medium text-gray-800">{ref.destination}</span>
                 <span className="text-sm text-gray-500">
@@ -133,7 +134,17 @@ export default function CasoDetalhe() {
                   className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm"
                 />
                 <button
-                  onClick={() => { setShowReferralForm(false); setNewReferral('') }}
+                  onClick={() => {
+                    if (newReferral.trim()) {
+                      setLocalReferrals(prev => [...prev, {
+                        destination: newReferral.trim(),
+                        status: 'EM_ANDAMENTO',
+                        date: new Date().toISOString().slice(0, 10)
+                      }])
+                    }
+                    setShowReferralForm(false)
+                    setNewReferral('')
+                  }}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm"
                 >
                   Salvar

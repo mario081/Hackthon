@@ -1,6 +1,6 @@
 export default function CaseTabs({ tabs, activeTab, onTabChange }) {
   return (
-    <div className="flex gap-1 overflow-x-auto border-b border-gray-200 mb-4">
+    <div role="tablist" className="flex gap-1 overflow-x-auto border-b border-gray-200 mb-4">
       {tabs.map((tab) => (
         <button
           key={tab.key}
