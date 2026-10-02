@@ -55,7 +55,9 @@ export default function Login() {
 
           {!configured && (
             <p role="alert" className="rounded-xl border border-amber-300/40 bg-amber-400/10 p-3 text-sm text-amber-100">
-              Login não configurado. Rode <code className="font-mono">npm run senha -- SuaSenha</code> e reinicie o servidor.
+              Login não configurado. Local: rode <code className="font-mono">npm run senha -- SuaSenha</code> e reinicie o servidor.
+              Na Vercel: crie <code className="font-mono">VITE_ADMIN_USER</code> e <code className="font-mono">VITE_ADMIN_PASSWORD_SHA256</code> em
+              Environment Variables e faça Redeploy.
             </p>
           )}
 
