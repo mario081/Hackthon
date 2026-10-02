@@ -1,11 +1,21 @@
 import { Link } from 'react-router-dom'
 import {
   Accessibility, ArrowRight, BookOpenText, Bot, CircleCheck, ClipboardList, EyeOff, FileText, Hand, HeartHandshake,
-  LayoutDashboard, ListChecks, Lock, MessageSquareText, Phone, Route, Send, ShieldCheck, Siren, TriangleAlert, Type, UserRound,
+  LayoutDashboard, ListChecks, Lock, MessageSquareText, Phone, Route, ScanLine, Send, ShieldCheck, Siren, TriangleAlert, Type, UserRound,
   Users, Volume2,
 } from 'lucide-react'
 import Logo from '../components/Logo'
+import QrCode from '../components/QrCode'
 import { imgUrl } from '../data/catalog'
+
+const CLIENTS = [
+  'Escolas e secretarias de educação',
+  'CRAS, CREAS e assistência social',
+  'Conselhos tutelares',
+  'Serviços de saúde e CAPS',
+  'Órgãos públicos de proteção',
+  'ONGs e organizações de defesa de direitos',
+]
 
 const NAV = [
   ['#problema', 'O problema'],
@@ -114,6 +124,9 @@ function PhoneMock() {
 }
 
 export default function Landing() {
+  const siteUrl = `${window.location.origin}/`
+  const siteLabel = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
+
   return (
     <div data-testid="page-landing" className="min-h-screen">
       <header className="sticky top-0 z-30 border-b border-navy-700/60 bg-navy-950/80 backdrop-blur">
@@ -261,18 +274,44 @@ export default function Landing() {
           <FeatureGrid items={PANEL} />
         </Section>
 
-        {/* CTA final */}
-        <section className="px-4 pb-24 sm:px-6">
-          <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 rounded-3xl border border-accent/40 bg-gradient-to-br from-navy-800 to-navy-900 px-6 py-14 text-center shadow-glow">
-            <h2 className="max-w-2xl text-3xl font-bold text-white sm:text-4xl">Veja o Voz Segura funcionando</h2>
-            <p className="max-w-xl text-lg text-slate-300">
-              Faça um relato de teste com pictogramas e depois acompanhe o caso chegando ao painel institucional.
-            </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link to="/app" className="btn-primary px-8 text-lg">
-                Acessar aplicação <ArrowRight size={20} aria-hidden="true" />
-              </Link>
-              <Link to="/painel" className="btn-outline px-8 text-lg">Painel institucional</Link>
+        {/* Chamada para instituições + QR code */}
+        <section id="contratar" className="scroll-mt-20 px-4 pb-24 sm:px-6">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 overflow-hidden rounded-3xl border border-accent/40 bg-gradient-to-br from-navy-950 via-navy-900 to-cyan-600/60 px-6 py-12 shadow-glow sm:px-10 lg:grid-cols-[1.3fr_1fr] lg:py-16">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Para sua instituição</p>
+              <h2 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl">
+                Leve o Voz Segura para quem você atende
+              </h2>
+              <p className="mt-4 max-w-xl text-lg text-slate-200">
+                Ofereça um canal de relato acessível e um painel organizado para a sua equipe agir com rapidez,
+                registro fiel e respeito à pessoa atendida.
+              </p>
+              <ul className="mt-6 grid gap-2 text-slate-100 sm:grid-cols-2">
+                {CLIENTS.map((c) => (
+                  <li key={c} className="flex items-start gap-2">
+                    <CircleCheck size={20} className="mt-0.5 shrink-0 text-accent" aria-hidden="true" /> {c}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link to="/app" className="btn-primary px-8 text-lg">
+                  Acessar aplicação <ArrowRight size={20} aria-hidden="true" />
+                </Link>
+                <Link to="/painel" className="btn-outline bg-navy-950/40 px-8 text-lg">Conhecer o painel</Link>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-4 text-center">
+              <p className="text-2xl font-bold uppercase tracking-wide text-white">Voz Segura</p>
+              <div className="relative rounded-3xl border-[5px] border-rose-600 bg-white p-4">
+                <span className="absolute -top-[13px] left-1/2 h-5 w-1/3 -translate-x-1/2 rounded-sm bg-rose-600" aria-hidden="true" />
+                <span className="absolute -bottom-[13px] left-1/2 h-5 w-1/3 -translate-x-1/2 rounded-sm bg-rose-600" aria-hidden="true" />
+                <QrCode value={siteUrl} label={`QR code para acessar ${siteLabel}`} className="h-52 w-52 sm:h-60 sm:w-60" />
+              </div>
+              <p className="flex items-center gap-2 font-medium text-white">
+                <ScanLine size={20} className="text-accent" aria-hidden="true" /> Aponte a câmera do celular
+              </p>
+              <p className="break-all text-sm text-slate-300">{siteLabel}</p>
             </div>
           </div>
         </section>
