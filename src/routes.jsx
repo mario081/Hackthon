@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom'
+import Landing from './pages/Landing'
 import Inicio from './pages/user/Inicio'
 import Relato from './pages/user/Relato'
 import Enviado from './pages/user/Enviado'
@@ -13,8 +14,10 @@ import Login from './pages/panel/Login'
 import RequireAuth from './components/panel/RequireAuth'
 
 export const routes = [
+  // Apresentação do projeto
+  { path: '/', element: <Landing /> },
   // Frente 1 — pessoa atendida
-  { path: '/', element: <Inicio /> },
+  { path: '/app', element: <Inicio /> },
   { path: '/relato', element: <Relato /> },
   { path: '/enviado/:id', element: <Enviado /> },
   { path: '/acompanhar', element: <Acompanhar /> },

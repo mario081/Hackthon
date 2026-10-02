@@ -23,7 +23,7 @@ export default function Enviado() {
         </div>
         <div className="flex w-full max-w-sm flex-col gap-3">
           <Link to={`/acompanhar/${id}`} className="btn-primary text-lg">Acompanhar meu caso</Link>
-          <Link to="/" className="btn-outline text-lg">Voltar ao início</Link>
+          <Link to="/app" className="btn-outline text-lg">Voltar ao início</Link>
         </div>
       </div>
     </UserLayout>

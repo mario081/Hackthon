@@ -7,6 +7,7 @@
 @layer base {
   html {
     color-scheme: dark;
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-navy-950 text-slate-100 font-sans antialiased;

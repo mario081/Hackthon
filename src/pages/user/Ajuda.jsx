@@ -9,7 +9,7 @@ export default function Ajuda() {
   const navigate = useNavigate()
 
   return (
-    <UserLayout title="Ajuda imediata" back="/">
+    <UserLayout title="Ajuda imediata" back="/app">
       <div data-testid="page-ajuda" className="flex flex-col gap-5">
         <div className="flex gap-3 rounded-2xl bg-red-600 p-5 text-white">
           <TriangleAlert size={36} className="shrink-0" aria-hidden="true" />

@@ -49,7 +49,7 @@ export default function Relato() {
   }
 
   function goBack() {
-    if (index === 0) navigate('/')
+    if (index === 0) navigate('/app')
     else setIndex((i) => i - 1)
   }
 

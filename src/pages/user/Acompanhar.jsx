@@ -42,7 +42,7 @@ export default function Acompanhar() {
   const report = id ? getReport(id) : null
 
   return (
-    <UserLayout title="Acompanhamento" back={id ? '/acompanhar' : '/'}>
+    <UserLayout title="Acompanhamento" back={id ? '/acompanhar' : '/app'}>
       <div data-testid="page-acompanhar" className="flex flex-col gap-5">
         {!id && (
           <>

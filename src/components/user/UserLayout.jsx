@@ -4,7 +4,7 @@ import Logo from '../Logo'
 import QuickExit from '../QuickExit'
 
 const NAV = [
-  { to: '/', label: 'Início', icon: House, end: true },
+  { to: '/app', label: 'Início', icon: House, end: true },
   { to: '/acompanhar', label: 'Acompanhamento', icon: ListChecks },
   { to: '/ajuda', label: 'Ajuda', icon: LifeBuoy },
 ]

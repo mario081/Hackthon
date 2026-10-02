@@ -29,7 +29,7 @@ function Toggle({ icon: Icon, title, desc, checked, onChange, disabled }) {
 export default function Acessibilidade() {
   const { largeText, setLargeText, readAloud, setReadAloud, canSpeak } = useSettings()
   return (
-    <UserLayout title="Acessibilidade" back="/">
+    <UserLayout title="Acessibilidade" back="/app">
       <div data-testid="page-acessibilidade" className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold text-white">Ajuste do seu jeito</h1>
         <Toggle icon={Type} title="Texto maior" desc="Aumenta letras e botões em todo o app" checked={largeText} onChange={setLargeText} />

@@ -27,7 +27,7 @@ async function fillAll(user) {
 }
 
 test('início mostra as quatro formas de comunicar e a saída rápida', () => {
-  renderApp('/')
+  renderApp('/app')
   for (const name of [/quero denunciar/i, /estou em perigo/i, /falar sobre alguém/i, /dar um depoimento/i]) {
     expect(screen.getByRole('button', { name })).toBeInTheDocument()
   }
@@ -36,14 +36,14 @@ test('início mostra as quatro formas de comunicar e a saída rápida', () => {
 
 test('sair rapidamente troca a página para um site neutro', async () => {
   const user = userEvent.setup()
-  renderApp('/')
+  renderApp('/app')
   await user.click(screen.getByRole('button', { name: /sair rapidamente/i }))
   expect(leave).toHaveBeenCalledWith(expect.stringContaining('google'))
 })
 
 test('"Falar sobre alguém" já marca Outra pessoa', async () => {
   const user = userEvent.setup()
-  renderApp('/')
+  renderApp('/app')
   await user.click(screen.getByRole('button', { name: /falar sobre alguém/i }))
   expect(screen.getByRole('heading', { name: /sobre quem é o relato/i })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: /outra pessoa/i })).toHaveAttribute('aria-pressed', 'true')

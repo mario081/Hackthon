@@ -104,7 +104,7 @@ export default function Login() {
         </form>
 
         <p className="mt-6 text-center text-sm text-slate-400">
-          <Link to="/" className="hover:text-accent">← Voltar ao app de relatos</Link>
+          <Link to="/" className="hover:text-accent">← Voltar ao site</Link>
         </p>
       </div>
     </div>

@@ -11,12 +11,12 @@ export default function Logo({ size = 'md', tagline = false }) {
             <rect key={i} x={2 + i * 6} y={16 - bh / 2} width="4" height={bh} rx="2" fill={i === 2 ? '#22d3ee' : '#67e8f9'} opacity={i === 2 ? 1 : 0.85} />
           ))}
         </svg>
-        <span className={`${text} font-bold tracking-tight text-white`} aria-hidden="true">
+        <span className={`${text} font-bold tracking-tight text-white whitespace-nowrap`} aria-hidden="true">
           Voz <span className="text-accent">Segura</span>
         </span>
       </div>
       {tagline && (
-        <span className="hidden border-l border-navy-600 pl-3 text-[11px] font-medium uppercase leading-tight tracking-[0.18em] text-slate-400 lg:block">
+        <span className="hidden border-l border-navy-600 pl-3 text-[11px] font-medium uppercase leading-tight tracking-[0.18em] text-slate-400 whitespace-nowrap xl:block">
           Tecnologia que amplia vozes
           <br />e protege direitos
         </span>
