@@ -1,3 +1,46 @@
+@import '@fontsource-variable/inter';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-navy-950 text-slate-100 font-sans antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 100% -10%, rgba(42, 90, 168, 0.35), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(34, 211, 238, 0.12), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-navy-600/60 bg-navy-850/80 backdrop-blur;
+  }
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-5 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-navy-950 hover:bg-accent-soft;
+  }
+  .btn-outline {
+    @apply btn border border-accent/60 text-accent hover:bg-accent/10;
+  }
+  .btn-ghost {
+    @apply btn text-slate-300 hover:bg-white/5;
+  }
+  .field {
+    @apply min-h-[44px] w-full rounded-xl border border-navy-600 bg-navy-900 px-3 text-slate-100 placeholder:text-slate-500 focus:border-accent focus:outline-none;
+  }
+  .label {
+    @apply text-xs font-medium uppercase tracking-wide text-slate-400;
+  }
+}

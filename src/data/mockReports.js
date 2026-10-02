@@ -1,92 +1,111 @@
-export const MOCK_REPORTS = [
-  {
-    id: 'VX-2026-0041',
-    receivedAt: '2026-09-30T14:32:00Z',
-    status: 'NEW',
-    priority: 'URGENT',
-    selections: {
-      WHO:      [{ id: 'adult_male',  arasaacId: 26557, label: 'Homem adulto' }],
-      WHAT:     [{ id: 'hit',         arasaacId: 6047,  label: 'Bateu' }],
-      WHERE:    [{ id: 'home',        arasaacId: 4800,  label: 'Casa' }],
-      WHEN:     [{ id: 'today',       arasaacId: 6344,  label: 'Hoje' }],
-      FEELINGS: [{ id: 'fear',        arasaacId: 6307,  label: 'Medo' }],
-    },
-    aiSummary:
-      'A pessoa atendida indicou, por meio da interface de comunicação assistiva, que um homem adulto teria praticado agressão física em ambiente residencial no dia atual. A pessoa também associou o sentimento de medo ao ocorrido.',
-    timeline: [
-      { time: '14:32', description: 'Relato enviado pela pessoa atendida' },
-      { time: '14:40', description: 'Relato visualizado por profissional autorizado' },
-    ],
-    referrals: [],
-  },
-  {
-    id: 'VX-2026-0040',
-    receivedAt: '2026-09-30T11:15:00Z',
-    status: 'IN_ATTENDANCE',
-    priority: 'MEDIUM',
-    selections: {
-      WHO:      [{ id: 'teacher',  arasaacId: 5525,  label: 'Professor/a' }],
-      WHAT:     [{ id: 'shout',    arasaacId: 29631, label: 'Gritou' },
-                 { id: 'threaten', arasaacId: 30128, label: 'Ameaçou' }],
-      WHERE:    [{ id: 'school',   arasaacId: 5061,  label: 'Escola' }],
-      WHEN:     [{ id: 'yesterday',arasaacId: 6346,  label: 'Ontem' }],
-      FEELINGS: [{ id: 'fear',     arasaacId: 6307,  label: 'Medo' },
-                 { id: 'sadness',  arasaacId: 6310,  label: 'Tristeza' }],
-    },
-    aiSummary:
-      'A pessoa atendida indicou que um professor ou professora teria gritado e ameaçado em ambiente escolar no dia anterior. A pessoa associou os sentimentos de medo e tristeza ao ocorrido.',
-    timeline: [
-      { time: '11:15', description: 'Relato enviado pela pessoa atendida' },
-      { time: '11:22', description: 'Relato visualizado por profissional' },
-      { time: '11:30', description: 'Caso classificado como prioridade média' },
-      { time: '11:45', description: 'Caso atribuído ao setor de Psicologia' },
-    ],
-    referrals: [{ destination: 'Psicologia', status: 'EM_ANDAMENTO', date: '2026-09-30' }],
-  },
-  {
-    id: 'VX-2026-0039',
-    receivedAt: '2026-09-29T16:00:00Z',
-    status: 'REFERRED',
-    priority: 'URGENT',
-    selections: {
-      WHO:      [{ id: 'stranger', arasaacId: 29523, label: 'Pessoa desconhecida' }],
-      WHAT:     [{ id: 'touch',    arasaacId: 2418,  label: 'Tocou' }],
-      WHERE:    [{ id: 'transport',arasaacId: 6418,  label: 'Transporte' }],
-      WHEN:     [{ id: 'yesterday',arasaacId: 6346,  label: 'Ontem' }],
-      FEELINGS: [{ id: 'shame',   arasaacId: 6316,  label: 'Vergonha' },
-                 { id: 'fear',    arasaacId: 6307,  label: 'Medo' }],
-    },
-    aiSummary:
-      'A pessoa atendida indicou que uma pessoa desconhecida teria realizado contato físico não autorizado em transporte público no dia anterior. A pessoa associou os sentimentos de vergonha e medo ao ocorrido.',
-    timeline: [
-      { time: '16:00', description: 'Relato enviado pela pessoa atendida' },
-      { time: '16:10', description: 'Caso classificado como urgente' },
-      { time: '16:20', description: 'Encaminhado para Assistência Social' },
-      { time: '16:35', description: 'Encaminhado para Conselho Tutelar' },
-    ],
-    referrals: [
-      { destination: 'Assistência Social', status: 'CONCLUIDO',    date: '2026-09-29' },
-      { destination: 'Conselho Tutelar',   status: 'EM_ANDAMENTO', date: '2026-09-29' },
-    ],
-  },
-  {
-    id: 'VX-2026-0038',
-    receivedAt: '2026-09-29T09:45:00Z',
-    status: 'UNDER_REVIEW',
-    priority: 'LOW',
-    selections: {
-      WHO:      [{ id: 'colleague', arasaacId: 4929, label: 'Colega' }],
-      WHAT:     [{ id: 'take',      arasaacId: 5671, label: 'Tirou algo' }],
-      WHERE:    [{ id: 'school',    arasaacId: 5061, label: 'Escola' }],
-      WHEN:     [{ id: 'last_week', arasaacId: 6350, label: 'Semana passada' }],
-      FEELINGS: [{ id: 'anger',     arasaacId: 6308, label: 'Raiva' }],
-    },
-    aiSummary:
-      'A pessoa atendida indicou que um colega teria tomado algo dela em ambiente escolar na semana anterior. A pessoa associou o sentimento de raiva ao ocorrido.',
-    timeline: [
-      { time: '09:45', description: 'Relato enviado pela pessoa atendida' },
-      { time: '10:00', description: 'Relato em triagem' },
-    ],
-    referrals: [],
-  },
+import { buildSummary, situationType, suggestPriority } from '../lib/reports'
+import { CATEGORIES } from './catalog'
+
+// [sobre, quem, o quê, onde, quando, sentimentos, status, responsável, origem]
+const COMBOS = [
+  ['teen', ['colleague'], ['psychological', 'online'], ['school', 'internet'], 'often', ['sadness', 'shame'], 'IN_REVIEW', 'carla', 'RELATO'],
+  ['child', ['family'], ['physical'], ['home'], 'today', ['fear', 'pain'], 'NEW', null, 'TERCEIRO'],
+  ['self', ['colleague'], ['bullying'], ['school'], 'often', ['sadness'], 'IN_REVIEW', 'beatriz', 'RELATO'],
+  ['teen', ['stranger'], ['online'], ['internet'], 'last_week', ['fear', 'anxiety'], 'AWAITING', 'rafael', 'RELATO'],
+  ['self', ['man'], ['physical', 'threat'], ['home'], 'yesterday', ['fear'], 'IN_REVIEW', 'carla', 'PERIGO'],
+  ['disability', ['professional'], ['neglect'], ['other_where'], 'often', ['sadness'], 'AWAITING', 'rafael', 'TERCEIRO'],
+  ['self', ['colleague'], ['discrimination'], ['work'], 'last_week', ['anger', 'shame'], 'NEW', null, 'DEPOIMENTO'],
+  ['teen', ['teacher'], ['psychological'], ['school'], 'yesterday', ['shame', 'sadness'], 'REFERRED', 'beatriz', 'RELATO'],
+  ['self', ['stranger'], ['sexual'], ['transport'], 'yesterday', ['fear', 'shame'], 'REFERRED', 'carla', 'RELATO'],
+  ['elderly', ['family'], ['neglect', 'psychological'], ['home'], 'often', ['sadness'], 'IN_REVIEW', 'rafael', 'TERCEIRO'],
+  ['self', ['colleague'], ['bullying', 'discrimination'], ['school'], 'often', ['anger', 'sadness'], 'NEW', null, 'RELATO'],
+  ['child', ['stranger'], ['other_what'], ['street'], 'dont_know', ['confusion'], 'CLOSED', 'beatriz', 'TERCEIRO'],
+  ['self', ['woman'], ['threat'], ['internet'], 'today', ['fear', 'anxiety'], 'NEW', null, 'RELATO'],
+  ['teen', ['family'], ['physical'], ['home'], 'last_week', ['pain', 'fear'], 'REFERRED', 'rafael', 'RELATO'],
+  ['self', ['professional'], ['psychological'], ['work'], 'often', ['anxiety'], 'CLOSED', 'carla', 'DEPOIMENTO'],
+  ['disability', ['colleague'], ['discrimination'], ['school'], 'last_week', ['sadness', 'confusion'], 'AWAITING', 'beatriz', 'TERCEIRO'],
+  ['self', ['man'], ['sexual'], ['street'], 'long_ago', ['shame', 'fear'], 'IN_REVIEW', 'carla', 'DEPOIMENTO'],
+  ['teen', ['colleague'], ['online'], ['internet'], 'often', ['shame'], 'REFERRED', 'beatriz', 'RELATO'],
+  ['child', ['teacher'], ['psychological'], ['school'], 'yesterday', ['fear'], 'CLOSED', 'beatriz', 'TERCEIRO'],
+  ['self', ['family'], ['psychological', 'threat'], ['home'], 'often', ['fear', 'sadness'], 'REFERRED', 'rafael', 'RELATO'],
+  ['elderly', ['professional'], ['physical'], ['other_where'], 'last_week', ['pain'], 'AWAITING', 'rafael', 'TERCEIRO'],
+  ['self', ['stranger'], ['other_what'], ['transport'], 'long_ago', ['calm'], 'CLOSED', 'carla', 'DEPOIMENTO'],
+  ['teen', ['colleague', 'teacher'], ['bullying'], ['school'], 'often', ['sadness', 'anger'], 'IN_REVIEW', 'beatriz', 'RELATO'],
+  ['self', ['man'], ['physical'], ['home'], 'yesterday', ['pain', 'fear'], 'REFERRED', 'carla', 'RELATO'],
+  ['child', ['family'], ['neglect'], ['home'], 'often', ['sadness'], 'REFERRED', 'rafael', 'TERCEIRO'],
+  ['self', ['colleague'], ['discrimination'], ['school'], 'yesterday', ['anger'], 'CLOSED', 'beatriz', 'RELATO'],
+  ['teen', ['stranger'], ['threat'], ['street'], 'last_week', ['fear'], 'CLOSED', 'carla', 'RELATO'],
+  ['self', ['woman'], ['psychological'], ['work'], 'often', ['anxiety', 'sadness'], 'REFERRED', 'carla', 'DEPOIMENTO'],
+  ['disability', ['stranger'], ['discrimination'], ['transport'], 'yesterday', ['shame'], 'CLOSED', 'rafael', 'TERCEIRO'],
+  ['self', ['colleague'], ['online'], ['internet'], 'last_week', ['confusion'], 'CLOSED', 'beatriz', 'RELATO'],
 ]
+
+const REFERRAL_BY_TYPE = {
+  physical:       'Delegacia Especializada (DEAM)',
+  sexual:         'Delegacia Especializada (DEAM)',
+  threat:         'Delegacia Especializada (DEAM)',
+  neglect:        'Conselho Tutelar',
+  psychological:  'Acompanhamento psicológico — CAPS Infantojuvenil',
+  bullying:       'Articulação com a escola',
+  online:         'Acompanhamento psicológico — CAPS Infantojuvenil',
+  discrimination: 'Assistência social — CREAS',
+  other_what:     'Assistência social — CREAS',
+}
+
+const ASSIGNEE_NAME = { carla: 'Carla Mendes', rafael: 'Rafael Souza', beatriz: 'Beatriz Lima' }
+const STATUS_ORDER = ['NEW', 'IN_REVIEW', 'AWAITING', 'REFERRED', 'CLOSED']
+const MIN = 60 * 1000
+
+function buildReport(combo, index) {
+  const [about, who, what, where, when, feelings, status, assigneeId, origin] = combo
+  const selections = { ABOUT: [about], WHO: who, WHAT: what, WHERE: where, WHEN: [when], FEELINGS: feelings }
+  CATEGORIES.forEach((c) => { selections[c] ??= [] })
+
+  // Casos mais recentes primeiro, espaçados ~22h a partir de 02/10/2026.
+  const created = new Date(Date.UTC(2026, 9, 2, 13, 5) - index * (22 * 60 + 17 * (index % 5)) * MIN)
+  const at = (minutes) => new Date(created.getTime() + minutes * MIN).toISOString()
+  const level = STATUS_ORDER.indexOf(status)
+  const type = situationType(selections)
+
+  const timeline = [{ at: at(0), title: 'Relato recebido', description: 'Caso registrado no sistema.' }]
+  const referrals = []
+  const notes = []
+
+  if (level >= 1) {
+    timeline.push({ at: at(8), title: 'Triagem concluída', description: `Classificado como ${type.toLowerCase()}.` })
+    timeline.push({ at: at(190), title: 'Profissional atribuído', description: `Caso encaminhado para ${ASSIGNEE_NAME[assigneeId]}.` })
+    timeline.push({ at: at(250), title: 'Em análise', description: 'Início do atendimento e plano de ação.' })
+    notes.push({
+      id: `n${index}-1`,
+      at: at(260),
+      author: ASSIGNEE_NAME[assigneeId],
+      text: 'Primeiro contato realizado com apoio da interface de comunicação. Pessoa demonstrou compreender as perguntas.',
+    })
+  }
+  if (level >= 2) {
+    timeline.push({ at: at(1500), title: 'Aguardando retorno', description: 'Contato com a rede de proteção solicitado.' })
+    referrals.push({ id: `r${index}-1`, destination: REFERRAL_BY_TYPE[what[0]], status: level >= 3 ? 'IN_PROGRESS' : 'PENDING', at: at(1500) })
+  }
+  if (level >= 3) {
+    timeline.push({ at: at(2900), title: 'Encaminhado', description: `Encaminhado para ${referrals[0].destination}.` })
+    if (selections.WHERE.includes('school')) {
+      referrals.push({ id: `r${index}-2`, destination: 'Articulação com a escola', status: 'PENDING', at: at(2900) })
+    }
+  }
+  if (level >= 4) {
+    referrals.forEach((r) => { r.status = 'DONE' })
+    timeline.push({ at: at(8000), title: 'Concluído', description: 'Atendimento finalizado com acompanhamento da rede.' })
+  }
+
+  return {
+    id: `2026-${String(1548 - index).padStart(6, '0')}`,
+    createdAt: created.toISOString(),
+    origin,
+    status,
+    priority: suggestPriority(selections, origin),
+    assigneeId,
+    selections,
+    extraText: index === 0 ? 'Mandam mensagens no grupo da turma rindo de mim.' : '',
+    aiSummary: buildSummary(selections, index === 0 ? 'Mandam mensagens no grupo da turma rindo de mim.' : ''),
+    timeline,
+    referrals,
+    notes,
+  }
+}
+
+export const MOCK_REPORTS = COMBOS.map(buildReport)
